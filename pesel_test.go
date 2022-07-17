@@ -72,11 +72,14 @@ func TestValidPeselNumbers(t *testing.T) {
 func TestInvalidPeselNumbers(t *testing.T) {
 	cases := []string{
 		"12345678403",
+		"12035678441",
 	}
 	for _, data := range cases {
 		_, err := New(data)
 		if err == nil {
 			t.Errorf("PESEL %s should be invalid", data)
+		} else {
+			t.Log(err.Error())
 		}
 	}
 }
