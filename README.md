@@ -1,3 +1,5 @@
+[![Go](https://github.com/ppasieka/pesel-toolbox/actions/workflows/go.yml/badge.svg)](https://github.com/ppasieka/pesel-toolbox/actions/workflows/go.yml)
+
 # PESEL toolbox
 
 The PESEL (Personal Identification Number) toolbox is a Golang library that helps you with validation and generation of PESEL strings.
