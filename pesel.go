@@ -26,6 +26,14 @@ type Pesel struct {
 	dateOfBirth Date
 }
 
+func (p Pesel) Gender() Gender {
+	return p.gender
+}
+
+func (p Pesel) Number() PeselNumber {
+	return p.number
+}
+
 type peselError struct {
 	number string
 	reason string

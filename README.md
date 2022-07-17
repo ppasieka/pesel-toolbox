@@ -18,20 +18,19 @@ Example of PESEL validation
 package main
 
 import (
-	"fmt"
-	"os"
-
-	"github.com/ppasieka/pesel-toolbox"
+    "fmt"
+    "os"
+    "github.com/ppasieka/pesel-toolbox"
 )
 
 func main() {
-	number := os.Args[1]
+    number := os.Args[1]
 
-	pesel, err := pesel.New(number)
-	if err != nil {
-		fmt.Println(err.Error()) 
-	} else {
-		fmt.Printf("'%s' is a valid PESEL.", number) 
+    _, err := pesel.New(number)
+    if err != nil {
+        fmt.Println(err.Error())
+    } else {
+        fmt.Printf("'%s' is a valid PESEL.", number)
     }
 }
 ```
