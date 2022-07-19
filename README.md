@@ -8,7 +8,7 @@ It can help you to:
 
 - Validate PESEL strings
 
-- Generate PESEL numbers (Not implemented yet)
+- Generate PESEL numbers
 
 ## Validate PESEL
 
