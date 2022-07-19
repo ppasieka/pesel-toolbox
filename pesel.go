@@ -2,6 +2,7 @@ package pesel
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
 	"time"
 )
@@ -44,18 +45,19 @@ func (pe peselError) Error() string {
 }
 
 func toSlice(number string) ([]int, error) {
-	peselNumbers := make([]int, 11)
+	intSlice := make([]int, 0, 11)
 	var parseError error = nil
-	for i := 0; i < 11; i++ {
+	for i := 0; i < len(number); i++ {
 		digit, err := strconv.Atoi(string(number[i]))
 		if err != nil {
 			parseError = err
 			break
 		}
-		peselNumbers[i] = digit
+
+		intSlice = append(intSlice, digit)
 	}
 
-	return peselNumbers, parseError
+	return intSlice, parseError
 }
 
 var weights = [10]int{1, 3, 7, 9, 1, 3, 7, 9, 1, 3}
@@ -130,4 +132,59 @@ func New(number string) (Pesel, error) {
 	pesel.dateOfBirth = dateOfBirth
 
 	return *pesel, nil
+}
+
+func generateDate() Date {
+	year := rand.Intn(2099-1900) + 1900
+	month := time.Month(rand.Intn(12) + 1)
+	firstOfMonth := time.Date(year, month, 1, 0, 0, 0, 0, time.Now().Location())
+	lastOfMonth := firstOfMonth.AddDate(0, 1, -1)
+	day := rand.Intn(lastOfMonth.Day()) + 1
+
+	return Date{
+		Year:  year,
+		Month: month,
+		Day:   day,
+	}
+}
+
+func generateRandomDigits(count int) []int {
+	digits := make([]int, count)
+	for i := 0; i < count; i++ {
+		digits[i] = rand.Intn(10)
+	}
+	return digits
+}
+
+func convertToString(digits []int) string {
+	var result string
+	for _, d := range digits {
+		result += strconv.Itoa(d)
+	}
+
+	return result
+}
+
+func Generate() Pesel {
+	rand.Seed(time.Now().UnixNano())
+
+	date := generateDate()
+	monthShift := ((date.Year - 1900) / 100) * 20
+	digits := convertToString(generateRandomDigits(4))
+
+	result := fmt.Sprintf(
+		"%02d%02d%02d%s",
+		date.Year%100,
+		monthShift+int(date.Month),
+		date.Day,
+		digits,
+	)
+	n, _ := toSlice(result)
+	checksum := calculateChecksum(n)
+	result += strconv.Itoa(checksum)
+	pesel, err := New(result)
+	if err != nil {
+		return pesel
+	}
+	return pesel
 }

@@ -26,11 +26,11 @@ import (
 func main() {
     number := os.Args[1]
 
-    _, err := pesel.New(number)
+    p, err := pesel.New(number)
     if err != nil {
         fmt.Println(err.Error())
     } else {
-        fmt.Printf("'%s' is a valid PESEL.", number)
+        fmt.Printf("'%s' is a valid PESEL.", p.Number())
     }
 }
 ```
