@@ -1,4 +1,5 @@
 [![Go](https://github.com/ppasieka/pesel-toolbox/actions/workflows/go.yml/badge.svg)](https://github.com/ppasieka/pesel-toolbox/actions/workflows/go.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/ppasieka/pesel-toolbox.svg)](https://pkg.go.dev/github.com/ppasieka/pesel-toolbox)
 
 # PESEL toolbox
 
